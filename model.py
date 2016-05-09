@@ -17,25 +17,31 @@ class Model(db.Model):
 
     __tablename__ = "models"
 
-    brand_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    name = db.Column(db.String(50), db.ForeignKey('models.brand_name') nullable=False)
-    founded = db.Column(db.Integer, nullable=True)
-    headquarters = db.Column(db.String(50), nullable=True)
-    discontinued = db.Column(db.Integer, nullable=True)
+    id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    year = db.Column(db.Integer, nullable=False)
+    brand_name = db.Column(db.String(50), db.ForeignKey('brands.name'), nullable=True)
+    name = db.Column(db.String(50), nullable=False)
 
+    def __repr__(self):
+            """Provide helpful representation when printed."""
 
+            return "<Model id=%s year=%s brand_name=%s name=%s>" % (self.id, self.year, self.brand_name, self.name)
 
 class Brand(db.Model):
     """Car brand."""
 
     __tablename__ = "brands"
 
-    model_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    year = db.Column(db.Integer, nullable=False)
-    brand_name = db.Column(db.String(50), db.ForeignKey('brands.name') nullable=True)
-    name = db.Column(db.String(50), nullable=False)
+    id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    name = db.Column(db.String(50), db.ForeignKey('models.brand_name'), nullable=False)
+    founded = db.Column(db.Integer, nullable=True)
+    headquarters = db.Column(db.String(50), nullable=True)
+    discontinued = db.Column(db.Integer, nullable=True)
 
+    def __repr__(self):
+            """Provide helpful representation when printed."""
 
+            return "<Brand id=%s name=%s founded=%s headquarters=%s discontinued%s>" % (self.id, self.name, self.founded, self.headquarters, self.discontinued)
 
 # End Part 1
 
